@@ -5,7 +5,8 @@ from .serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
-#
+from rest_framework.generics import ListAPIView, RetrieveAPIView, DestroyAPIView, CreateAPIView, UpdateAPIView
+
 # class KafedraViewSet(ModelViewSet):
 #     queryset = Kafedra.objects.all()
 #     serializer_class = KafedraSerializer
@@ -29,7 +30,6 @@ from rest_framework.exceptions import NotFound
 # class StudentViewSet(ModelViewSet):
 #     queryset = Student.objects.all()
 #     serializer_class = StudentSerializer
-
 
 class KafedraView(APIView):
 
@@ -104,7 +104,6 @@ class SubjectView(APIView):
         subject = self.get_object(kwargs.get("pk"))
         subject.delete()
         return Response({'state': 'deleted'})
-
 
 class TeacherView(APIView):
 
@@ -219,7 +218,6 @@ class GroupView(APIView):
         model.delete()
         return Response({"state": "deleted"})
 
-
 class StudentView(APIView):
 
     def get_object(self, pk):
@@ -233,12 +231,12 @@ class StudentView(APIView):
 
         if kwargs.get("pk"):
             model = self.get_object(kwargs.get("pk"))
-            serializer = StudentSerializer(data=model, many=True)
+            serializer = StudentSerializer(instance=model, many=False)
             return Response(serializer.data)
 
         else:
             model = Student.objects.all()
-            serializer = StudentSerializer(data=request.data, instance=model)
+            serializer = StudentSerializer(instance=model, many=True)
             return Response(serializer.data)
 
     def post(self, request):
@@ -258,3 +256,145 @@ class StudentView(APIView):
         model = self.get_object(kwargs.get("pk"))
         model.delete()
         return Response({"state": "deleted"})
+
+############generic views#######################
+class KafedraCreateView(CreateAPIView):
+    queryset = Kafedra.objects.all()
+    serializer_class = KafedraSerializer
+    
+class KafedraUpdateView(UpdateAPIView):
+    queryset = Kafedra.objects.all()
+    serializer_class = KafedraSerializer
+    
+class KafedraRetrieveView(RetrieveAPIView):
+    queryset = Kafedra.objects.all()
+    serializer_class = KafedraSerializer
+
+class KafedraDestroyView(DestroyAPIView):
+    queryset = Kafedra.objects.all()
+    serializer_class = KafedraSerializer 
+
+class KafedraListView(ListAPIView):
+    queryset = Kafedra.objects.all()
+    serializer_class = KafedraSerializer
+
+###################Faculty########################
+class FacultyCreateView(CreateAPIView):
+    queryset = Faculty.objects.all()
+    serializer_class = FacultySerializer
+
+
+class FacultyUpdateView(UpdateAPIView):
+    queryset = Faculty.objects.all()
+    serializer_class = FacultySerializer
+
+
+class FacultyRetrieveView(RetrieveAPIView):
+    queryset = Faculty.objects.all()
+    serializer_class = FacultySerializer
+
+
+class FacultyDestroyView(DestroyAPIView):
+    queryset = Faculty.objects.all()
+    serializer_class = FacultySerializer
+
+
+class FacultyListView(ListAPIView):
+    queryset = Faculty.objects.all()
+    serializer_class = FacultySerializer 
+
+##############Subject############# 
+class SubjectCreateView(CreateAPIView):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+
+
+class SubjectUpdateView(UpdateAPIView):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+
+
+class SubjectRetrieveView(RetrieveAPIView):
+    queryset = Kafedra.objects.all()
+    serializer_class = SubjectSerializer
+
+
+class SubjectDestroyView(DestroyAPIView):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+
+
+class SubjectListView(ListAPIView):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer 
+
+###########GROUP############## 
+class GroupCreateView(CreateAPIView):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+
+class GroupUpdateView(UpdateAPIView):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+
+class GroupRetrieveView(RetrieveAPIView):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+
+class GroupDestroyView(DestroyAPIView):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+
+class GroupListView(ListAPIView):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer 
+
+########TEACHER####################
+class TeacherCreateView(CreateAPIView):
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSerializer
+
+
+class TeacherUpdateView(UpdateAPIView):
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSerializer
+
+
+class TeacherRetrieveView(RetrieveAPIView):
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSerializer
+
+
+class TeacherDestroyView(DestroyAPIView):
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSerializer
+
+
+class TeacherListView(ListAPIView):
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSerializer 
+
+###########STUDENT##################
+class StudentCreateView(CreateAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+class StudentUpdateView(UpdateAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+class StudentRetrieveView(RetrieveAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+class StudentDestroyView(DestroyAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+class StudentListView(ListAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer 
